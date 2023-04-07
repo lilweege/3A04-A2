@@ -1,12 +1,3 @@
-<style>
-.markdown-body {
-    font-family: "Helvetica";
-}
-.markdown-body code {
-    font-family: "Iosevka Extended";
-}
-</style>
-
 # SFRWENG 3A04: Assignment 2
 **Author**: Luigi Quattrociocchi (quattrl)  
 **Date**: April 12, 2023  
