@@ -73,6 +73,11 @@ VerifyFIM::VerifyFIM(std::istream& is)
         }
         userPasswords[password] = range;
     }
+    
+    for (const auto& [id, p] : mUsedPasswordDB) {
+        const auto& [lastUsedPassword, _] = p;
+        mRealFIM->ChangePassword({id, lastUsedPassword});
+    }
 }
 
 // Serialize
