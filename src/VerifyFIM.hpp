@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <vector>
 #include <chrono>
+#include <fstream>
 
 class VerifyFIM : public FIM
 {
@@ -20,6 +21,9 @@ public:
 
     VerifyFIM(std::unique_ptr<FIM>);
     FIM::Error ChangePassword(const User&) override;
+
+    VerifyFIM(std::istream&); // Deserialize
+    void ToStream(std::ostream&) const; // Serialize
 private:
     std::unique_ptr<FIM> mRealFIM;
     std::unordered_map<UserID, std::pair<Password, std::unordered_map<Password, DateRange>>> mUsedPasswordDB;
