@@ -25,16 +25,17 @@ static void PrintDate()
 int main(int argc, char** argv)
 {
     // Optional command line arguments to specify paths of files to be read from and written to.
-    const char* in_filepath = argc >= 2 ? argv[1] : "data_before.txt";
-    const char* out_filepath = argc >= 3 ? argv[2] : "data_after.txt";
+    const char* inFilepath = argc >= 2 ? argv[1] : "data_before.txt";
+    const char* outFilepath = argc >= 3 ? argv[2] : "data_after.txt";
 
     // Example usage of proxy pattern:
 
     // Create a proxy (VerifyFIM) for the real subject (RealFIM).
     // The client interfaces with the abstract FIM class only.
     // This is fine since the interface is the same for both concrete classes.
-    std::ifstream f{in_filepath};
-    std::unique_ptr<FIM> fim = std::make_unique<VerifyFIM>(f);
+    std::ifstream inp{inFilepath};
+    std::unique_ptr<FIM> fim = std::make_unique<VerifyFIM>(inp);
+    inp.close();
 
     // Shorthand for changing password and checking for an error.
     auto ChangePassword = [&](FIM::UserID uID, const char* s) {
@@ -57,6 +58,7 @@ int main(int argc, char** argv)
     ChangePassword(0, "password"); // Will fail (old password from file)
 
     // Write modified database to new file.
-    std::ofstream fs{out_filepath};
-    dynamic_cast<VerifyFIM*>(fim.get())->ToStream(fs);
+    std::ofstream out{outFilepath};
+    dynamic_cast<VerifyFIM*>(fim.get())->ToStream(out);
+    out.close();
 }
