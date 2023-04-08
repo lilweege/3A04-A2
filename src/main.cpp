@@ -24,6 +24,7 @@ static void PrintDate()
 
 int main(int argc, char** argv)
 {
+    // Optional command line arguments to specify paths of files to be read from and written to.
     const char* in_filepath = argc >= 2 ? argv[1] : "data_before.txt";
     const char* out_filepath = argc >= 3 ? argv[2] : "data_after.txt";
 
@@ -55,7 +56,7 @@ int main(int argc, char** argv)
     ChangePassword(1, "dog"); // Will fail (current password)
     ChangePassword(0, "password"); // Will fail (old password from file)
 
-    // Write to new file.
+    // Write modified database to new file.
     std::ofstream fs{out_filepath};
     dynamic_cast<VerifyFIM*>(fim.get())->ToStream(fs);
 }
